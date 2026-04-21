@@ -24,9 +24,7 @@ export class WebsocketService {
 
     this.stompClient!.connect({}, (frame: any) => {
       this.statusSubject.next('Connected');
-      this.stompClient!.subscribe('/topic/test', (message: any) => {
-        this.messageSubject.next(JSON.parse(message.body));
-      });
+      
       }, (error: any) => {
           this.statusSubject.next('Error' + error.message);
       });
