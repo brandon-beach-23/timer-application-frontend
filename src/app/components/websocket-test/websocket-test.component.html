@@ -1,0 +1,14 @@
+<div>
+  <h2>WebSocket Test</h2>
+  
+  <p>Status: {{ status }}</p>
+  
+  <button (click)="onConnect()">Connect</button>
+  <button (click)="onDisconnect()">Disconnect</button>
+  <button (click)="onSendMessage('/app/test', 'Hello from Angular')">Send Test Message</button>
+  
+  <h3>Messages:</h3>
+  <ul>
+    <li *ngFor="let msg of messages">{{ msg }}</li>
+  </ul>
+</div>

@@ -1,0 +1,56 @@
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Client, IFrame } from '@stomp/stompjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WebsocketService {
+
+  private statusSubject = new Subject<string>();
+  public status$ = this.statusSubject.asObservable();
+
+  private messageSubject = new Subject<string>();
+  public message$ = this.messageSubject.asObservable();
+  
+  private stompClient: Client | null = null;
+
+  constructor() { }
+
+  connect(): void {
+    this.stompClient = new Client({
+      brokerURL: 'ws://localhost:8080/ws/timer',
+      onConnect: (frame: IFrame) => {
+        this.statusSubject.next('Connected');
+      },
+      onStompError: (frame: IFrame) => {
+        this.statusSubject.next('Error: ' + frame.body);
+      }
+    });
+    this.stompClient.activate();
+  }
+
+ disconnect(): void {
+  if(this.stompClient){
+    this.stompClient.deactivate();
+    this.statusSubject.next('Disconnected');      
+  }
+}
+
+  sendMessage(destination: string, body: any): void {
+    if (this.stompClient && this.stompClient.connected){
+      this.stompClient.publish({
+        destination: destination,
+        body: JSON.stringify(body)
+      });
+    }
+  }
+
+  subscribe(destination: string): void {
+    if (this.stompClient){
+      this.stompClient.subscribe(destination, (message: any) => {
+        this.messageSubject.next(JSON.parse(message.body));
+      });
+    }
+  }
+}
