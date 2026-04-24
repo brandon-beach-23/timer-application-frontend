@@ -3,13 +3,13 @@ import { WebsocketService } from '../../services/websocket.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-websocket-test',
+  selector: 'app-timer-control',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './websocket-test.component.html',
-  styleUrls: ['./websocket-test.component.css']
+  templateUrl: './timer-control.component.html',
+  styleUrls: ['./timer-control.component.css']
 })
-export class WebsocketTestComponent implements OnInit {
+export class TimerControlComponent implements OnInit {
 
   public messages: string[] = [];
   public status: string = 'Disconnected'

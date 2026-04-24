@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WebsocketTestComponent } from './websocket-test.component';
+import { WebsocketTestComponent } from './timer-control.component';
 
 describe('WebsocketTestComponent', () => {
   let component: WebsocketTestComponent;
