@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormatTimePipe } from '../../pipes/format-time.pipe';
 import { TimerRequest } from '../../models/timer-request';
+import { SoundService } from '../../services/sound.service';
 
 @Component({
   selector: 'app-timer-control',
@@ -16,12 +17,14 @@ export class TimerControlComponent implements OnInit {
 
   public status: string = 'Disconnected'
   private websocketService: WebsocketService = inject(WebsocketService);
+  private soundService: SoundService = inject(SoundService);
   private fb = inject(FormBuilder);
   public timerName: string = '';
   public timerDuration: number = 0;
   public elapsedTime: number = 0;
   public currentState: string = 'INITIAL';
   public isConnected: boolean = false;
+  public hasCompleted: boolean = false;
   timerForm!: FormGroup;
 
   constructor() { }
@@ -41,8 +44,15 @@ export class TimerControlComponent implements OnInit {
     
 
     this.websocketService.message$.subscribe((timerUpdate: any) => {
+      const wasNotCompleted = !this.hasCompleted;
+
       this.elapsedTime = timerUpdate.elapsedTime;
       this.currentState = timerUpdate.timerState;
+      this.hasCompleted = timerUpdate.hasCompleted;
+
+      if (wasNotCompleted && this.hasCompleted) {
+        this.soundService.playNotificationSound();
+      }
     });
 
     this.timerForm = this.fb.group({
