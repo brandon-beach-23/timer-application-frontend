@@ -3,6 +3,7 @@ import { WebsocketService } from '../../services/websocket.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormatTimePipe } from '../../pipes/format-time.pipe';
+import { TimerRequest } from '../../models/timer-request';
 
 @Component({
   selector: 'app-timer-control',
@@ -55,21 +56,26 @@ export class TimerControlComponent implements OnInit {
  
 
   startTimer(): void {
-    // 1) Verify Name and Duration have been filled out
-    // 2) Send Message to backend including name and duration to start the timer
-    // 3) Lock the input fields and start timer button to prevent duplication.
+    
+    const formValue = this.timerForm.value;
+    const timerRequest: TimerRequest = {
+      timerName: formValue.timerName,
+      timerDuration: formValue.timerDuration * 60
+    };
+
+   this.websocketService.sendMessage("/app/start", timerRequest);
   }
 
   pauseTimer(): void {
-    // 1) Send the request to backend to pause the timer.
+    this.websocketService.sendMessage("/app/pause", '');
   }
 
   resumeTimer(): void {
-    // 1) Send the request to the backend to resume the timer.
+    this.websocketService.sendMessage("/app/resume", '');
   }
 
   stopTimer(): void {
-    // 1) Send the request to the backend to stop the timer.
+    this.websocketService.sendMessage("/app/stop", '');
   }
 
 }
