@@ -38,6 +38,7 @@ export class WebsocketService {
 }
 
   sendMessage(destination: string, body: any): void {
+    console.log('Sending to', destination, ':', body);
     if (this.stompClient && this.stompClient.connected){
       this.stompClient.publish({
         destination: destination,

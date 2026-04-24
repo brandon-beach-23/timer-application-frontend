@@ -28,11 +28,17 @@ export class TimerControlComponent implements OnInit {
 
   ngOnInit() {
     this.onConnect();
-    
+  
     this.websocketService.status$.subscribe(status => {
       this.status = status;
       this.isConnected = (status === 'Connected');
+
+      if (status === 'Connected') {
+        this.websocketService.subscribe('/topic/timer-updates');
+      }
     });
+
+    
 
     this.websocketService.message$.subscribe((timerUpdate: any) => {
       this.elapsedTime = timerUpdate.elapsedTime;
@@ -62,7 +68,7 @@ export class TimerControlComponent implements OnInit {
       timerName: formValue.timerName,
       timerDuration: formValue.timerDuration * 60
     };
-
+   console.log('Sending timer request:', timerRequest); 
    this.websocketService.sendMessage("/app/start", timerRequest);
   }
 
