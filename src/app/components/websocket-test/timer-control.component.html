@@ -1,14 +1,29 @@
 <div>
-  <h2>WebSocket Test</h2>
-  
-  <p>Status: {{ status }}</p>
-  
-  <button (click)="onConnect()">Connect</button>
-  <button (click)="onDisconnect()">Disconnect</button>
-  <button (click)="onSendMessage('/app/test', 'Hello from Angular')">Send Test Message</button>
-  
-  <h3>Messages:</h3>
-  <ul>
-    <li *ngFor="let msg of messages">{{ msg }}</li>
-  </ul>
+  <h2>Timer Control</h2>
+  <p>Connection Status: {{ status }}</p>
+
+  <form [formGroup]="timerForm" (ngSubmit)="startTimer()" *ngIf="currentState === 'INITIAL'">
+    <div>
+      <label for="timerName">Timer Name:</label>
+      <input type="text" id="timerName" formControlName="timerName" placeholder="e.g., Coding Practice">
+    </div>
+    
+    <div>
+      <label for="timerDuration">Duration (minutes):</label>
+      <input type="number" id="timerDuration" formControlName="timerDuration" placeholder="e.g., 60">
+    </div>
+    
+    <button type="submit" [disabled]="!isConnected || !timerForm.valid">Start Timer</button>
+  </form>
+
+  <div *ngIf="currentState !== 'INITIAL'">
+    <h3>{{ elapsedTime | formatTime }}</h3>
+    <p>State: {{ currentState }}</p>
+    
+    <div>
+      <button (click)="pauseTimer()" [disabled]="currentState !== 'RUNNING'">Pause</button>
+      <button (click)="resumeTimer()" [disabled]="currentState !== 'PAUSED'">Resume</button>
+      <button (click)="stopTimer()" [disabled]="currentState === 'INITIAL' || currentState === 'STOPPED'">Stop</button>
+    </div>
+  </div>
 </div>
