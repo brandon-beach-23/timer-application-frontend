@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TimerControlComponent } from './components/websocket-test/timer-control.component';
+import { TimerControlComponent } from './components/timer-control/timer-control.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
