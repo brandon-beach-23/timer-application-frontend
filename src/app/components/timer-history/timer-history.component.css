@@ -1,0 +1,122 @@
+.history-container {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.history-container h2 {
+  color: var(--accent-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+  letter-spacing: 0.05em;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-tertiary);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.history-table thead {
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--accent-primary);
+}
+
+.history-table th {
+  padding: 1.25rem 1rem;
+  text-align: left;
+  color: var(--accent-primary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.history-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.history-table tbody tr:hover {
+  background-color: var(--bg-secondary);
+  transition: background-color 0.3s ease;
+}
+
+.timer-name {
+  font-weight: 500;
+  color: var(--accent-primary);
+  letter-spacing: 0.02em;
+}
+
+.timer-duration {
+  color: var(--text-secondary);
+  font-family: 'Courier New', monospace;
+}
+
+.timer-elapsed {
+  font-family: 'Courier New', monospace;
+  color: var(--accent-secondary);
+  font-weight: 500;
+}
+
+.timer-date {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.completion-status {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.completion-status.completed {
+  background-color: rgba(74, 222, 128, 0.2);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.completion-status.incomplete {
+  background-color: rgba(248, 113, 113, 0.2);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .history-container {
+    padding: 1.5rem;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .timer-name {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}

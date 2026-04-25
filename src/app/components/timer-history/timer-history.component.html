@@ -1,17 +1,36 @@
-<div>
-  <ul>
-    <ng-container *ngIf="timerSessions.length > 0; else empty">
-      <li *ngFor="let timerSession of timerSessions">
-        <div>
-          <strong>{{ timerSession.timerName }}</strong>
-        </div>
-        <span>{{ timerSession.elapsedTime | formatTime }}</span>
-        <span>{{ timerSession.stoppedAt | date: 'short' }}</span>
-      </li>
-    </ng-container>
+<div class="history-container">
+  <h2>📊 Session History</h2>
 
-    <ng-template #empty>
-      <li>No timers found. Start a new timer to begin.</li>
-    </ng-template>
-  </ul>
+  <ng-container *ngIf="timerSessions.length > 0; else empty">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Timer Name</th>
+          <th>Duration</th>
+          <th>Elapsed Time</th>
+          <th>Stopped At</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of timerSessions">
+          <td class="timer-name">{{ session.timerName }}</td>
+          <td class="timer-duration">{{ session.duration | number: '2.0-0' }}s</td>
+          <td class="timer-elapsed">{{ session.elapsedTime | formatTime }}</td>
+          <td class="timer-date">{{ session.stoppedAt | date: 'short' }}</td>
+          <td>
+            <span class="completion-status" [ngClass]="session.hasCompleted ? 'completed' : 'incomplete'">
+              {{ session.hasCompleted ? '✓ Completed' : '✗ Incomplete' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <ng-template #empty>
+    <div class="empty-state">
+      <p>No timers yet. Start one to get going! 🚀</p>
+    </div>
+  </ng-template>
 </div>

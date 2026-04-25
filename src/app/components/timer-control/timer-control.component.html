@@ -1,29 +1,45 @@
-<div>
-  <h2>Timer Control</h2>
-  <p>Connection Status: {{ status }}</p>
-
-  <form [formGroup]="timerForm" (ngSubmit)="startTimer()" *ngIf="currentState === 'INITIAL'">
-    <div>
-      <label for="timerName">Timer Name:</label>
-      <input type="text" id="timerName" formControlName="timerName" placeholder="e.g., Coding Practice">
-    </div>
-    
-    <div>
-      <label for="timerDuration">Duration (minutes):</label>
-      <input type="number" id="timerDuration" formControlName="timerDuration" placeholder="e.g., 60">
-    </div>
-    
-    <button type="submit" [disabled]="!isConnected || !timerForm.valid">Start Timer</button>
-  </form>
-
-  <div *ngIf="currentState !== 'INITIAL'">
-    <h3>{{ elapsedTime | formatTime }}</h3>
-    <p>State: {{ currentState }}</p>
-    
-    <div>
-      <button (click)="pauseTimer()" [disabled]="currentState !== 'RUNNING'">Pause</button>
-      <button (click)="resumeTimer()" [disabled]="currentState !== 'PAUSED'">Resume</button>
-      <button (click)="stopTimer()" [disabled]="currentState === 'INITIAL' || currentState === 'STOPPED'">Stop</button>
+<div class="timer-container">
+  <div class="header">
+    <h2>⏱ Timer Control</h2>
+    <div class="status-indicator">
+      <span class="status-dot" [ngClass]="isConnected ? 'connected' : 'disconnected'"></span>
+      <span>{{ status }}</span>
     </div>
   </div>
+
+  <form [formGroup]="timerForm" (ngSubmit)="startTimer()" *ngIf="currentState === 'INITIAL'">
+    <div class="form-section">
+      <div class="form-group">
+        <label for="timerName">Timer Name</label>
+        <input type="text" id="timerName" formControlName="timerName" placeholder="e.g., Coding Practice">
+      </div>
+      
+      <div class="form-group">
+        <label for="timerDuration">Duration (minutes)</label>
+        <input type="number" id="timerDuration" formControlName="timerDuration" placeholder="e.g., 60">
+      </div>
+    </div>
+    
+    <button type="submit" class="start-btn" [disabled]="!isConnected || !timerForm.valid">
+      Start Timer
+    </button>
+  </form>
+
+  <div *ngIf="currentState !== 'INITIAL'" class="timer-display">
+    <h3>{{ elapsedTime | formatTime }}</h3>
+    <p class="timer-state">{{ currentState }}</p>
+  </div>
+
+  <div *ngIf="currentState !== 'INITIAL'" class="button-group">
+    <button (click)="pauseTimer()" [disabled]="currentState !== 'RUNNING'" class="pause-btn">
+      ⏸ Pause
+    </button>
+    <button (click)="resumeTimer()" [disabled]="currentState !== 'PAUSED'" class="resume-btn">
+      ▶ Resume
+    </button>
+    <button (click)="stopTimer()" [disabled]="currentState === 'INITIAL' || currentState === 'STOPPED'" class="stop-btn">
+      ⏹ Stop
+    </button>
+  </div>
 </div>
+
