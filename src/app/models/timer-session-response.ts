@@ -1,7 +1,7 @@
 export interface TimerSessionResponse {
     timerName: string;
-    timerDuration: number;
-    timerElapsedTime: number;
+    duration: number;
+    elapsedTime: number;
     timerState: string;
     hasCompleted: boolean;
     createdAt: Date;

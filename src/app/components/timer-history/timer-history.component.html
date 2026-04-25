@@ -5,7 +5,7 @@
         <div>
           <strong>{{ timerSession.timerName }}</strong>
         </div>
-        <span>{{ timerSession.timerElapsedTime | formatTime }}</span>
+        <span>{{ timerSession.elapsedTime | formatTime }}</span>
         <span>{{ timerSession.stoppedAt | date: 'short' }}</span>
       </li>
     </ng-container>

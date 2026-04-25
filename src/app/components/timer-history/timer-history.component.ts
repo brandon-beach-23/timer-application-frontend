@@ -18,17 +18,24 @@ export class TimerHistoryComponent implements OnInit{
 
   constructor() {}
 
-  ngOnInit() {
-    this.requestHistory();
-
-    this.websocketService.message$.subscribe((historyUpdate: any) => {
-         this.timerSessions = historyUpdate;
-        });
-    
-        
-  }
+ ngOnInit() {
+  this.websocketService.status$.subscribe(status => {
+    if (status === 'Connected') {
+      this.websocketService.subscribe('/topic/timer-history');
+      this.requestHistory();
+    }
+  });
+  
+  this.websocketService.history$.subscribe((historyUpdate: any) => {
+    console.log('Received history update:', historyUpdate);
+    if (Array.isArray(historyUpdate)) {
+      this.timerSessions = historyUpdate;
+    }
+  });
+}
 
   requestHistory() {
+    console.log('Requesting history...');
     this.websocketService.sendMessage("/app/history", '');
   }
 }

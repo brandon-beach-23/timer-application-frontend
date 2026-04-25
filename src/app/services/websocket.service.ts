@@ -12,6 +12,9 @@ export class WebsocketService {
 
   private messageSubject = new Subject<string>();
   public message$ = this.messageSubject.asObservable();
+
+  private historySubject = new Subject<any>();
+  public history$ = this.historySubject.asObservable();
   
   private stompClient: Client | null = null;
 
@@ -50,7 +53,13 @@ export class WebsocketService {
   subscribe(destination: string): void {
     if (this.stompClient){
       this.stompClient.subscribe(destination, (message: any) => {
-        this.messageSubject.next(JSON.parse(message.body));
+        const parsed = JSON.parse(message.body);
+      
+        if (destination === '/topic/timer-updates') {
+          this.messageSubject.next(parsed);
+        } else if (destination === '/topic/timer-history') {
+          this.historySubject.next(parsed);
+        }
       });
     }
   }
