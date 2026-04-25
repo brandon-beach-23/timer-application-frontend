@@ -1,1 +1,17 @@
-<p>timer-history works!</p>
+<div>
+  <ul>
+    <ng-container *ngIf="timerSessions.length > 0; else empty">
+      <li *ngFor="let timerSession of timerSessions">
+        <div>
+          <strong>{{ timerSession.timerName }}</strong>
+        </div>
+        <span>{{ timerSession.timerElapsedTime | formatTime }}</span>
+        <span>{{ timerSession.stoppedAt | date: 'short' }}</span>
+      </li>
+    </ng-container>
+
+    <ng-template #empty>
+      <li>No timers found. Start a new timer to begin.</li>
+    </ng-template>
+  </ul>
+</div>
