@@ -1,27 +1,60 @@
-# TimerApplicationFrontend
+# Timer Application - Front End
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+## Overview
 
-## Development server
+The Angular frontend allows a user to create a new timer, control the current timer, and displays previous timer sessions. The timer's display is also present on the UI.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Problem & Motivation
 
-## Code scaffolding
+There are a lot timer applications out there but this project allowed me the opportunity to learn websockets, system design, and testing strategies. This project was a tool I could make myself and use as productivity tool for future projects.
+## Key Features
+-  Track time and alert the user when the duration of the timer has elapsed.
+- Persisted timer sessions to track consistency.
+- Websocket communication to allow for efficient communication between the frontend and backend.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tech Stack
+**Backend:**
+- Spring Boot
+- Java
 
-## Build
+**Frontend:**
+- Angular
+ 
+**Database:**
+- H2 (File Based)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Architecture & Design Decisions
 
-## Running unit tests
+The Angular front end a Spring Boot backend establish a connection upon loading via websockets, The frontend is responsible for sending user input to start the timer and control various states (Pause, Resume, Stop) as well as display the elapsed time and previous timer sessions. The back end performs the actions, keeps track of the ticks, and broadcasts updates to the frontend. Websockets were used to keep the frontend from polling the backend constantly.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting Started
 
-## Running end-to-end tests
+### Prerequisites
+- Java 17+
+- Node.js 18+
+- Maven
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Frontend Setup
+```bash
+cd timer-application-frontend
+npm install
+ng serve
+```
 
-## Further help
+The application will be available at http://localhost:4200
+## What I Learned
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- How and Why websockets should be used 
+- Ingesting data from the backend via websockets and exposing it through an observable
+
+### Future Improvements
+
+- Reset UI upon stopping the timer session
+- Selection of notification sound
+
+### Repository Links
+
+- Backend Repository
+	https://github.com/brandon-beach-23/timer-application
+- Frontend Repository
+    https://github.com/brandon-beach-23/timer-application-frontend
